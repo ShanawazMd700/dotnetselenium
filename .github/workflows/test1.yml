@@ -30,32 +30,27 @@ jobs:
       - name: Build project
         run: dotnet build --configuration Release --no-restore
 
-      # Step 5: Setup Chrome and ChromeDriver
-      - name: Install Chrome and ChromeDriver
-        shell: pwsh
-        run: |
-            Write-Host "Installing Chrome via winget..."
-            winget install -e --id Google.Chrome -h --accept-package-agreements --accept-source-agreements
-            Write-Host "Installing ChromeDriver via winget..."
-            winget install -e --id Google.ChromeDriver -h --accept-package-agreements --accept-source-agreements
-            Write-Host "Chrome and ChromeDriver installed."
-            chrome --version
-            chromedriver --version
+      # Step 5: Setup Chrome
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v2
 
+      # Step 6: Setup ChromeDriver
+      - name: Setup ChromeDriver
+        uses: nanasess/setup-chromedriver@v1
+        with:
+          version: latest
 
-      #  Step 6: Run Tests (NUnit or SpecFlow)
+      # Step 7: Run Tests (NUnit or SpecFlow)
       - name: Run Selenium Tests
         run: dotnet test --configuration Release --logger "nunit;LogFilePath=TestResult.xml"
 
-
-      #  Step 7: Upload Test Results and Extent Reports
+      # Step 8: Upload Test Results and Extent Reports
       - name: Upload Test Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Selenium_Test_Reports
-          path: |
+            name: Selenium_Test_Reports
+            path: |
               **/TestResult.xml
               **/Reports/**
               **/ExtentReports/**
-
