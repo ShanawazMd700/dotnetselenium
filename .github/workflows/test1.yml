@@ -42,7 +42,7 @@ jobs:
 
       # Step 7: Run Tests (NUnit or SpecFlow)
       - name: Run ReqnRoll Selenium Tests
-        run: dotnet test --configuration Release 
+        run: dotnet test --configuration Release --logger "console;verbosity=detailed"
 
       # Step 8: Upload Test Results and Extent Reports
       - name: Upload Test Reports
