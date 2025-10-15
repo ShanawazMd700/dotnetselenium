@@ -76,7 +76,7 @@ Scenario: Handling the upload and download
 	When We click on the element with the text "Upload and Download"
 	When We click on the button with the text Download
 	Then The file should be downloaded successfully
-	When We upload a file with the path "C:\Users\iray\Downloads\sampleFile.jpeg"
+	When We upload a file with the path "resources\sampleFile.jpeg"
 	Then Verify the text 'C:\fakepath\sampleFile.jpeg' should be displayed successfully
 
 Scenario: Handling the dynamic properties

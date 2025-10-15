@@ -448,7 +448,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.ThenAsync("The file should be downloaded successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 79
- await testRunner.WhenAsync("We upload a file with the path \"C:\\Users\\iray\\Downloads\\sampleFile.jpeg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("We upload a file with the path \"resources\\sampleFile.jpeg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 80
  await testRunner.ThenAsync("Verify the text \'C:\\fakepath\\sampleFile.jpeg\' should be displayed successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

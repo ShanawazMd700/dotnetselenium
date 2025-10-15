@@ -184,3 +184,4 @@ C:\Users\iray\source\repos\SeleniumDemo\bin\Debug\net9.0\SharpCompress.dll
 C:\Users\iray\source\repos\SeleniumDemo\bin\Debug\net9.0\System.Security.Permissions.dll
 C:\Users\iray\source\repos\SeleniumDemo\bin\Debug\net9.0\runtimes\win-x64\nativeassets\netcoreapp2.2\aspnetcorev2_inprocess.dll
 C:\Users\iray\source\repos\SeleniumDemo\bin\Debug\net9.0\runtimes\win-x86\nativeassets\netcoreapp2.2\aspnetcorev2_inprocess.dll
+C:\Users\iray\source\repos\SeleniumDemo\obj\Debug\net9.0\SeleniumDemo.sourcelink.json
