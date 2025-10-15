@@ -41,16 +41,15 @@ jobs:
           version: latest
 
       # Step 7: Run Tests (NUnit or SpecFlow)
-      - name: Run Selenium Tests
-        run: dotnet test --configuration Release --logger "nunit;LogFilePath=TestResult.xml"
+      - name: Run ReqnRoll Selenium Tests
+        run: dotnet test --configuration Release 
 
       # Step 8: Upload Test Results and Extent Reports
-      - name: Upload Test Artifacts
+      - name: Upload Test Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-            name: Selenium_Test_Reports
-            path: |
-              **/TestResult.xml
-              **/Reports/**
-              **/ExtentReports/**
+          name: Selenium_ExtentReports
+          path: |
+            **/ExtentReports/**
+
