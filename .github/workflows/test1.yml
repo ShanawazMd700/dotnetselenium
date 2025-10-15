@@ -1,0 +1,60 @@
+name: .NET Selenium CI (Windows)
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      #  Step 2: Setup .NET SDK
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'  
+
+      # Step 3: Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Step 4: Build solution
+      - name: Build project
+        run: dotnet build --configuration Release --no-restore
+
+      # Step 5: Setup Chrome and ChromeDriver
+      - name: Install Chrome and ChromeDriver
+        shell: pwsh
+        run: |
+          Write-Host "Installing Chrome via winget..."
+          winget install -e --id Google.Chrome -h --accept-package-agreements --accept-source-agreements
+          Write-Host "Installing ChromeDriver via winget..."
+          winget install -e --id Google.ChromeDriver -h --accept-package-agreements --accept-source-agreements
+          Write-Host "Chrome and ChromeDriver installed."
+          & "C:\Program Files\Google\Chrome\Application\chrome.exe" --version
+          & "C:\Program Files\Google\ChromeDriver\chromedriver.exe" --version
+
+      #  Step 6: Run Tests (NUnit or SpecFlow)
+      - name: Run Selenium Tests
+        run: dotnet test --configuration Release --logger "nunit;LogFilePath=TestResult.xml"
+
+
+      #  Step 7: Upload Test Results and Extent Reports
+      - name: Upload Test Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Selenium_Test_Reports
+          path: |
+              **/TestResult.xml
+              **/Reports/**
+              **/ExtentReports/**
+
