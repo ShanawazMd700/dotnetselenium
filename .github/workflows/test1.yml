@@ -34,13 +34,14 @@ jobs:
       - name: Install Chrome and ChromeDriver
         shell: pwsh
         run: |
-          Write-Host "Installing Chrome via winget..."
-          winget install -e --id Google.Chrome -h --accept-package-agreements --accept-source-agreements
-          Write-Host "Installing ChromeDriver via winget..."
-          winget install -e --id Google.ChromeDriver -h --accept-package-agreements --accept-source-agreements
-          Write-Host "Chrome and ChromeDriver installed."
-          & "C:\Program Files\Google\Chrome\Application\chrome.exe" --version
-          & "C:\Program Files\Google\ChromeDriver\chromedriver.exe" --version
+            Write-Host "Installing Chrome via winget..."
+            winget install -e --id Google.Chrome -h --accept-package-agreements --accept-source-agreements
+            Write-Host "Installing ChromeDriver via winget..."
+            winget install -e --id Google.ChromeDriver -h --accept-package-agreements --accept-source-agreements
+            Write-Host "Chrome and ChromeDriver installed."
+            chrome --version
+            chromedriver --version
+
 
       #  Step 6: Run Tests (NUnit or SpecFlow)
       - name: Run Selenium Tests
