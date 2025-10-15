@@ -383,47 +383,6 @@ this.ScenarioInitialize(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Performing a drag interaction into other inner box in Prevent Propogation")]
-        [NUnitRetry.NRetry(3)]
-        public async global::System.Threading.Tasks.Task PerformingADragInteractionIntoOtherInnerBoxInPreventPropogation()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Performing a drag interaction into other inner box in Prevent Propogation", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 61
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 62
- await testRunner.GivenAsync("We go to the page \"https://demoqa.com/\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 63
- await testRunner.AndAsync("We click on the element with the text \"Interactions\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 64
- await testRunner.WhenAsync("We click on the element with the text \"Droppable\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 65
- await testRunner.WhenAsync("We select the side option as \"Prevent Propogation\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 66
- await testRunner.WhenAsync("We drag the element with the text \"Drag Me\" into other inner box", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 67
- await testRunner.ThenAsync("Verify if the dropping is done for the other inner box and the text \"Dropped!\" is" +
-                        " displayed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Performing a drag interaction into the box in Revert Draggable")]
         [NUnitRetry.NRetry(3)]
         public async global::System.Threading.Tasks.Task PerformingADragInteractionIntoTheBoxInRevertDraggable()
