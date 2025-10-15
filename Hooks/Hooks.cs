@@ -8,7 +8,7 @@ using OpenQA.Selenium.Chrome;
 using SeleniumDemo.Utilities;
 using Reqnroll;
 using AventStack.ExtentReports.Gherkin.Model;
-
+using System.Collections.Generic;
 
 namespace SeleniumDemo.Hooks
 {
@@ -27,6 +27,9 @@ namespace SeleniumDemo.Hooks
             Dir.Replace("bin\\Debug\\net9.0", "TestResults"),
             DateTime.Now.ToString("yyyyMMdd_HHmmss")
         );
+
+        // ✅ Reusable driver
+        public static IWebDriver driver;
 
         public Hooks(ScenarioContext scenarioContext)
         {
@@ -57,76 +60,73 @@ namespace SeleniumDemo.Hooks
         [BeforeFeature]
         public static void BeforeFeature(FeatureContext featureContext)
         {
-            _feature = _extentReports.CreateTest<AventStack.ExtentReports.Gherkin.Model.Feature>(
-                featureContext.FeatureInfo.Title
-            );
+            _feature = _extentReports.CreateTest<Feature>(featureContext.FeatureInfo.Title);
+
+            // ✅ Initialize ChromeDriver once per feature
+            if (driver == null)
+            {
+                var options = new ChromeOptions();
+                options.AddArgument("--headless=new");
+                options.AddArgument("--no-sandbox");
+                options.AddArgument("--disable-dev-shm-usage");
+                options.AddArgument("--disable-gpu");
+                options.AddArgument("--window-size=1920,1080");
+                options.AddArgument("--disable-popup-blocking");
+                options.AddArgument("--disable-extensions");
+                options.AddArgument("--disable-infobars");
+                options.AddArgument("--disable-notifications");
+                options.AddArgument("--enable-features=NetworkServiceInProcess");
+                options.AddArgument("--disable-features=VizDisplayCompositor");
+
+                // Optional download preferences
+                string downloadPath = Path.Combine(TestResultPath, "Downloads");
+                Directory.CreateDirectory(downloadPath);
+                var prefs = new Dictionary<string, object>
+                {
+                    ["download.default_directory"] = downloadPath,
+                    ["download.prompt_for_download"] = false,
+                    ["download.directory_upgrade"] = true,
+                    ["safebrowsing.enabled"] = true
+                };
+                options.AddUserProfilePreference("prefs", prefs);
+
+                driver = new ChromeDriver(options);
+                driver.Manage().Window.Maximize();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+
+                drivers.Driver = driver;
+            }
         }
 
         [BeforeScenario]
         public void BeforeScenario()
         {
-            _scenario = _feature.CreateNode<AventStack.ExtentReports.Gherkin.Model.Scenario>(
-       _scenarioContext.ScenarioInfo.Title
-   );
+            _scenario = _feature.CreateNode<Scenario>(_scenarioContext.ScenarioInfo.Title);
+            _scenarioContext["driver"] = driver;
 
-            var options = new ChromeOptions();
-
-            // ✅ Enable new-style headless mode for Chrome 109+
-            options.AddArgument("--headless=new");
-            options.AddArgument("--no-sandbox");
-            options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--window-size=1920,1080");
-            options.AddArgument("--disable-popup-blocking");
-            options.AddArgument("--disable-extensions");
-            options.AddArgument("--disable-infobars");
-            options.AddArgument("--disable-notifications");
-            options.AddArgument("--enable-features=NetworkServiceInProcess");
-            options.AddArgument("--disable-features=VizDisplayCompositor");
-
-            // ✅ Optional: Set download preferences for CI/CD
-            string downloadPath = Path.Combine(TestResultPath, "Downloads");
-            Directory.CreateDirectory(downloadPath);
-            var prefs = new Dictionary<string, object>
-            {
-                ["download.default_directory"] = downloadPath,
-                ["download.prompt_for_download"] = false,
-                ["download.directory_upgrade"] = true,
-                ["safebrowsing.enabled"] = true
-            };
-            options.AddUserProfilePreference("prefs", prefs);
-
-            // ✅ Launch Chrome with configured options
-            var driver = new ChromeDriver(options);
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-
-            // ✅ Remove ads or popups automatically
+            // ✅ Optional: Remove ads/popups at start of scenario
             try
             {
                 IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
                 js.ExecuteScript(@"
-            const adSelectors = [
-                'iframe[id*=""ad""]',
-                'div[id*=""ad""]',
-                'div[class*=""ad""]',
-                'div[class*=""popup""]',
-                'div[id*=""popup""]',
-                'div[class*=""banner""]',
-                'div[id*=""banner""]'
-            ];
-            adSelectors.forEach(sel => {
-                document.querySelectorAll(sel).forEach(e => e.remove());
-            });
-        ");
+                    const adSelectors = [
+                        'iframe[id*=""ad""]',
+                        'div[id*=""ad""]',
+                        'div[class*=""ad""]',
+                        'div[class*=""popup""]',
+                        'div[id*=""popup""]',
+                        'div[class*=""banner""]',
+                        'div[id*=""banner""]'
+                    ];
+                    adSelectors.forEach(sel => {
+                        document.querySelectorAll(sel).forEach(e => e.remove());
+                    });
+                ");
             }
             catch (Exception e)
             {
                 Console.WriteLine($"Could not remove ads automatically: {e.Message}");
             }
-
-            _scenarioContext["driver"] = driver;
-            drivers.Driver = driver;
         }
 
         [AfterStep]
@@ -178,8 +178,14 @@ namespace SeleniumDemo.Hooks
         [AfterScenario]
         public void AfterScenario()
         {
-            var driver = (IWebDriver)_scenarioContext["driver"];
+            // ✅ Do NOT quit driver here; reused per feature
+        }
+
+        [AfterFeature]
+        public static void AfterFeature()
+        {
             driver.Quit();
+            driver = null;
         }
 
         private string AddScreenshot(IWebDriver driver, ScenarioContext scenarioContext)
@@ -199,6 +205,5 @@ namespace SeleniumDemo.Hooks
 
             return screenshotPath;
         }
-
     }
 }
