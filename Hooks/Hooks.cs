@@ -66,39 +66,67 @@ namespace SeleniumDemo.Hooks
         public void BeforeScenario()
         {
             _scenario = _feature.CreateNode<AventStack.ExtentReports.Gherkin.Model.Scenario>(
-                _scenarioContext.ScenarioInfo.Title
-            );
+       _scenarioContext.ScenarioInfo.Title
+   );
 
-            var driver = new ChromeDriver();
+            var options = new ChromeOptions();
+
+            // ✅ Enable new-style headless mode for Chrome 109+
+            options.AddArgument("--headless=new");
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.AddArgument("--disable-gpu");
+            options.AddArgument("--window-size=1920,1080");
+            options.AddArgument("--disable-popup-blocking");
+            options.AddArgument("--disable-extensions");
+            options.AddArgument("--disable-infobars");
+            options.AddArgument("--disable-notifications");
+            options.AddArgument("--enable-features=NetworkServiceInProcess");
+            options.AddArgument("--disable-features=VizDisplayCompositor");
+
+            // ✅ Optional: Set download preferences for CI/CD
+            string downloadPath = Path.Combine(TestResultPath, "Downloads");
+            Directory.CreateDirectory(downloadPath);
+            var prefs = new Dictionary<string, object>
+            {
+                ["download.default_directory"] = downloadPath,
+                ["download.prompt_for_download"] = false,
+                ["download.directory_upgrade"] = true,
+                ["safebrowsing.enabled"] = true
+            };
+            options.AddUserProfilePreference("prefs", prefs);
+
+            // ✅ Launch Chrome with configured options
+            var driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            // ✅ Remove ads or popups automatically after browser launch
+
+            // ✅ Remove ads or popups automatically
             try
             {
                 IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
                 js.ExecuteScript(@"
-                    const adSelectors = [
-                    'iframe[id*=""ad""]',
-                    'div[id*=""ad""]',
-                    'div[class*=""ad""]',
-                    'div[class*=""popup""]',
-                    'div[id*=""popup""]',
-                    'div[class*=""banner""]',
-                    'div[id*=""banner""]'
-                                        ];
-                    adSelectors.forEach(sel => {
-                    document.querySelectorAll(sel).forEach(e => e.remove());
-                    });
-                ");
+            const adSelectors = [
+                'iframe[id*=""ad""]',
+                'div[id*=""ad""]',
+                'div[class*=""ad""]',
+                'div[class*=""popup""]',
+                'div[id*=""popup""]',
+                'div[class*=""banner""]',
+                'div[id*=""banner""]'
+            ];
+            adSelectors.forEach(sel => {
+                document.querySelectorAll(sel).forEach(e => e.remove());
+            });
+        ");
             }
             catch (Exception e)
             {
-                Console.WriteLine($" Could not remove ads automatically: {e.Message}");
+                Console.WriteLine($"Could not remove ads automatically: {e.Message}");
             }
 
             _scenarioContext["driver"] = driver;
             drivers.Driver = driver;
-
         }
 
         [AfterStep]
