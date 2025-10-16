@@ -153,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("We select the radiobutton \"Sports\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 17
- await testRunner.WhenAsync("We upload a file with the path \"C:\\Users\\iray\\Downloads\\sampleFile.jpeg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("We upload a file with the path \"resources\\sampleFile.jpeg\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 18
  await testRunner.WhenAsync("we select the state \"NCR\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
