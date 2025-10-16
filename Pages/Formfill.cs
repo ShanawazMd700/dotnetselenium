@@ -52,7 +52,7 @@ namespace SeleniumDemo.Pages
             controlHelper.ButtonClick(dob_box);
             var yearDropdown = waitHelpers.WaitForElement(yearbase);
             var optionElement = yearDropdown.FindElement(By.XPath($".//option[text()='{year}']"));
-
+            //
             // Scroll the option into view
             ((IJavaScriptExecutor)drivers.Driver).ExecuteScript("arguments[0].scrollIntoView(true);", optionElement);
 
