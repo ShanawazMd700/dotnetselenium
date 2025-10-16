@@ -19,10 +19,49 @@ namespace SeleniumDemo.Utilities
             waitHelpers = new WaitHelpers();
         }
 
-        public void ButtonClick(By Locator)
+        public void ButtonClick(By locator)
         {
-            waitHelpers.WaitForElement(Locator).Click();
+            IWebElement element = null;
+            try
+            {
+                element = waitHelpers.WaitForElement(locator);
+
+                // ✅ Scroll element into view
+                IJavaScriptExecutor js = (IJavaScriptExecutor)drivers.Driver;
+                js.ExecuteScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+
+                // ✅ Attempt normal click
+                element.Click();
+            }
+            catch (ElementClickInterceptedException)
+            {
+                Console.WriteLine("Element click intercepted. Attempting to remove overlays and retry...");
+
+                try
+                {
+                    IJavaScriptExecutor js = (IJavaScriptExecutor)drivers.Driver;
+
+                    // ✅ Remove common overlay/ad elements
+                    js.ExecuteScript(@"
+                document.querySelectorAll('iframe, div[id*=""ad""], div[class*=""ad""], div[class*=""popup""], div[id*=""popup""]').forEach(e => e.remove());
+            ");
+
+                    // ✅ Retry using JavaScript click (works even if something transient blocks)
+                    element = waitHelpers.WaitForElement(locator);  // 🔹 reuse same variable
+                    js.ExecuteScript("arguments[0].click();", element);
+                }
+                catch (Exception retryEx)
+                {
+                    throw new Exception($"ElementClickInterceptedException persisted after cleanup: {retryEx.Message}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to click element {locator}: {ex.Message}");
+            }
         }
+
+
         public void DoubleClick(By locator)
         {
             var driver = drivers.Driver;
