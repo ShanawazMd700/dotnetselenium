@@ -40,7 +40,7 @@ jobs:
         with:
           version: latest
 
-      # Step 7: Run Tests (NUnit or SpecFlow)
+      # Step 7: Run Tests (NUnit or ReqnRoll)
       - name: Run ReqnRoll Selenium Tests
         run: dotnet test --configuration Release --logger "console;verbosity=detailed" | tee TestResults.log
 
