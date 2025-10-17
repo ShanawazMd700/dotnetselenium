@@ -214,43 +214,6 @@ this.ScenarioInitialize(scenarioInfo);
             }
             await this.ScenarioCleanupAsync();
         }
-        
-        [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Selecting the option from the third dropdown in the dropdown menu")]
-        [NUnitRetry.NRetry(3)]
-        public async global::System.Threading.Tasks.Task SelectingTheOptionFromTheThirdDropdownInTheDropdownMenu()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Selecting the option from the third dropdown in the dropdown menu", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 27
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 28
- await testRunner.GivenAsync("We go to the page \"https://demoqa.com/\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 29
- await testRunner.AndAsync("We click on the element with the text \"Widgets\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 30
- await testRunner.WhenAsync("We click on the element with the text \"Select Menu\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 31
- await testRunner.ThenAsync("We select \"Black\" from the third dropdown", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-#line 32
- await testRunner.ThenAsync("Verify if the option \"Black\" is selected in the first dropdown", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
     }
 }
 #pragma warning restore

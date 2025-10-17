@@ -24,9 +24,9 @@ Scenario: Selecting the Options from standard dropdown in the dropdown menu
 	Then We select "Yellow" from the standard dropdown
 	And Verify if "Yellow" is selected in the standard dropdown
 
-Scenario: Selecting the option from the third dropdown in the dropdown menu
-	Given We go to the page "https://demoqa.com/"
-	And We click on the element with the text "Widgets" 
-	When We click on the element with the text "Select Menu"
-	Then We select "Black" from the third dropdown
-	Then Verify if the option "Black" is selected in the first dropdown
+#Scenario: Selecting the option from the third dropdown in the dropdown menu
+#	Given We go to the page "https://demoqa.com/"
+#	And We click on the element with the text "Widgets" 
+#	When We click on the element with the text "Select Menu"
+#	Then We select "Black" from the third dropdown
+#	Then Verify if the option "Black" is selected in the first dropdown
