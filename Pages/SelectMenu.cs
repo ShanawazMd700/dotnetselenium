@@ -48,7 +48,7 @@ namespace SeleniumDemo.Pages
             waitHelpers.WaitForElement(secondDropdown);
             controlHelper.ButtonClick(secondDropdown);
             // Step 2: Wait for the dropdown options to be visible
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(d => d.FindElement(By.XPath($"//div[contains(@class,'css-1uccc91-singleValue') or contains(@class,'css-1n7v3ny-option') and text()='{optionText}']")));
             // Step 3: Click the option dynamically
             var option = driver.FindElement(By.XPath($"//div[contains(@class,'css-1n7v3ny-option') and text()='{optionText}']"));
