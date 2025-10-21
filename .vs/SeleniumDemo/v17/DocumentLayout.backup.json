@@ -60,7 +60,7 @@
               "RelativeDocumentMoniker": "Pages\\UploadDownload.cs",
               "ToolTip": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\UploadDownload.cs",
               "RelativeToolTip": "Pages\\UploadDownload.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAYwDMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAA3wDUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-21T05:13:58.73Z",
               "EditorCaption": ""
@@ -75,8 +75,7 @@
               "RelativeToolTip": "StepDefinitions\\UploadDownloadInteractionStepDefinitions.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAvwBoAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-21T05:13:54.761Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-21T05:13:54.761Z"
             },
             {
               "$type": "Document",
@@ -112,8 +111,7 @@
               "RelativeToolTip": "Hooks\\Hooks.cs",
               "ViewState": "AgIAAGkAAAAAAAAAAAAuwM8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T09:45:29.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T09:45:29.28Z"
             },
             {
               "$type": "Document",
