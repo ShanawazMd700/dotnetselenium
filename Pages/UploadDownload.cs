@@ -23,49 +23,33 @@ namespace SeleniumDemo.Pages
         }
 
         /** ✅ Robust file upload supporting both pages */
-        public void UploadFile(string path)
+        public void UploadFile(string relativePath)
         {
-            // Resolve file path
-            var filePath = Path.IsPathRooted(path) ? path : Path.Combine(Directory.GetCurrentDirectory(), path);
+            if (driver == null)
+                throw new Exception("WebDriver is not initialized or has been disposed.");
+
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
 
             if (!File.Exists(filePath))
-            {
-                // Create dummy file if it doesn’t exist
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath) ?? Directory.GetCurrentDirectory());
-                using (var fs = File.Create(filePath)) { }
-                Console.WriteLine($"✅ Dummy file created: {filePath}");
-            }
+                throw new Exception($"File does not exist: {filePath}");
 
             By uploadLocator;
 
             string currentUrl = driver.Url.ToLower();
-            if (currentUrl.Contains("upload-download"))
-            {
-                uploadLocator = By.Id("uploadFile"); // ⚡ Make sure this points to <input type="file">
-            }
-            else if (currentUrl.Contains("automation-practice-form"))
-            {
+            if (currentUrl.Contains("practice-form"))
                 uploadLocator = By.Id("uploadPicture");
-            }
+            else if (currentUrl.Contains("upload-download"))
+                uploadLocator = By.Id("uploadFile");
             else
-            {
-                throw new Exception($"Unknown page: {currentUrl}");
-            }
+                throw new Exception("Unknown page: cannot determine upload input.");
 
-            try
-            {
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-                var uploadInput = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(uploadLocator));
+            var uploadElement = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                                    .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(uploadLocator));
 
-                // Send file path to input
-                uploadInput.SendKeys(filePath);
-                Console.WriteLine($"✅ File uploaded successfully: {filePath}");
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"❌ Failed to upload file: {filePath}", e);
-            }
+            uploadElement.SendKeys(filePath);
+            Console.WriteLine($"✅ File uploaded: {filePath}");
         }
+
 
 
         /** ✅ Download button click with scroll and wait */
