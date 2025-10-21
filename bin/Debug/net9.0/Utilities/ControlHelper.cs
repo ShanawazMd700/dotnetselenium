@@ -26,40 +26,28 @@ namespace SeleniumDemo.Utilities
             {
                 element = waitHelpers.WaitForElement(locator);
 
-                // ✅ Scroll element into view
                 IJavaScriptExecutor js = (IJavaScriptExecutor)drivers.Driver;
-                js.ExecuteScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+                js.ExecuteScript("arguments[0].scrollIntoView({block: 'center'});", element);
 
-                // ✅ Attempt normal click
-                element.Click();
-            }
-            catch (ElementClickInterceptedException)
-            {
-                Console.WriteLine("Element click intercepted. Attempting to remove overlays and retry...");
+                // Wait until element is clickable
+                waitHelpers.WaitUntilClickable(locator);
 
                 try
                 {
-                    IJavaScriptExecutor js = (IJavaScriptExecutor)drivers.Driver;
-
-                    // ✅ Remove common overlay/ad elements
-                    js.ExecuteScript(@"
-                document.querySelectorAll('iframe, div[id*=""ad""], div[class*=""ad""], div[class*=""popup""], div[id*=""popup""]').forEach(e => e.remove());
-            ");
-
-                    // ✅ Retry using JavaScript click (works even if something transient blocks)
-                    element = waitHelpers.WaitForElement(locator);  // 🔹 reuse same variable
-                    js.ExecuteScript("arguments[0].click();", element);
+                    element.Click();
                 }
-                catch (Exception retryEx)
+                catch (ElementClickInterceptedException)
                 {
-                    throw new Exception($"ElementClickInterceptedException persisted after cleanup: {retryEx.Message}");
+                    Console.WriteLine("⚠️ Element click intercepted, retrying via JS...");
+                    js.ExecuteScript("arguments[0].click();", element);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Failed to click element {locator}: {ex.Message}");
+                throw new Exception($"❌ Failed to click {locator}: {ex.Message}");
             }
         }
+
 
 
         public void DoubleClick(By locator)

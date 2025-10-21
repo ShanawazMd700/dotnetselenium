@@ -77,6 +77,8 @@ namespace SeleniumDemo.Hooks
                 options.AddArgument("--disable-notifications");
                 options.AddArgument("--enable-features=NetworkServiceInProcess");
                 options.AddArgument("--disable-features=VizDisplayCompositor");
+                options.PageLoadStrategy = PageLoadStrategy.Eager;
+
 
                 // Optional download preferences
                 string downloadPath = Path.Combine(TestResultPath, "Downloads");

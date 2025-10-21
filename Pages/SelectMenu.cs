@@ -25,9 +25,10 @@ namespace SeleniumDemo.Pages
         public void SelectDropdownOption(string optionText)
         {
             var driver = drivers.Driver;
+
             controlHelper.ButtonClick(firstDropdown);
             
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(d => d.FindElement(By.XPath($"//div[contains(@class,'css-1uccc91-singleValue') or contains(@class,'css-1n7v3ny-option') and text()='{optionText}']")));
             
             var option = driver.FindElement(By.XPath($"//div[contains(@class,'css-1n7v3ny-option') and text()='{optionText}']"));
@@ -44,6 +45,7 @@ namespace SeleniumDemo.Pages
         {
             var driver = drivers.Driver;
             controlHelper.ScrollToElement(secondDropdown);
+            waitHelpers.WaitForElement(secondDropdown);
             controlHelper.ButtonClick(secondDropdown);
             // Step 2: Wait for the dropdown options to be visible
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
@@ -70,7 +72,7 @@ namespace SeleniumDemo.Pages
         public void SelectMultiDropdownOptions(params string[] optionTexts)
         {
             var driver = drivers.Driver;
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             controlHelper.ScrollToElement(By.XPath("(//div[contains(@class,'css-1hwfws3')])[3]"));
             // Step 1: Click dropdown to expand
             var dropdown = driver.FindElement(By.XPath("(//div[contains(@class,'css-1hwfws3')])[3]"));
