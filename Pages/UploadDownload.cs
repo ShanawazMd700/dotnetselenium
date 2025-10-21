@@ -28,10 +28,15 @@ namespace SeleniumDemo.Pages
             if (driver == null)
                 throw new Exception("WebDriver is not initialized or has been disposed.");
 
-            string filePath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            // ✅ Try bin directory first
+            string binDirPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            string projectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\"));
+            string projectFilePath = Path.Combine(projectDir, relativePath);
+
+            string filePath = File.Exists(binDirPath) ? binDirPath : projectFilePath;
 
             if (!File.Exists(filePath))
-                throw new Exception($"File does not exist: {filePath}");
+                throw new Exception($"File does not exist in either location: {binDirPath} or {projectFilePath}");
 
             By uploadLocator;
             string currentUrl = driver.Url.ToLower();
@@ -49,6 +54,7 @@ namespace SeleniumDemo.Pages
             uploadElement.SendKeys(filePath);
             Console.WriteLine($"✅ File uploaded: {filePath}");
         }
+
 
 
 
