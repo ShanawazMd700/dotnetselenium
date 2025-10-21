@@ -15,8 +15,10 @@ namespace SeleniumDemo.Pages
         private readonly WaitHelpers waitHelpers;
         private readonly IWebDriver driver;
 
-        public UploadDownload()
+        public UploadDownload(ScenarioContext scenarioContext)
         {
+            driver = scenarioContext["driver"] as IWebDriver
+                    ?? throw new Exception("WebDriver is not initialized or has been disposed.");
             driver = drivers.Driver;
             controlHelper = new ControlHelper();
             waitHelpers = new WaitHelpers();
@@ -36,8 +38,8 @@ namespace SeleniumDemo.Pages
                 throw new Exception($"File does not exist: {filePath}");
 
             By uploadLocator;
-
             string currentUrl = driver.Url.ToLower();
+
             if (currentUrl.Contains("practice-form"))
                 uploadLocator = By.Id("uploadPicture");
             else if (currentUrl.Contains("upload-download"))

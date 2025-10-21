@@ -103,6 +103,17 @@ namespace SeleniumDemo.Hooks
         [BeforeScenario]
         public void BeforeScenario()
         {
+
+            // Initialize driver if not already
+            if (driver == null)
+            {
+                driver = new ChromeDriver();
+                driver.Manage().Window.Maximize();
+            }
+
+            // Add driver to scenario context
+            _scenarioContext["driver"] = driver;
+
             _scenario = _feature.CreateNode<Scenario>(_scenarioContext.ScenarioInfo.Title);
             _scenarioContext["driver"] = driver;
 
