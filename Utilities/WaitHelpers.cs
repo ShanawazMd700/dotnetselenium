@@ -18,6 +18,7 @@ namespace SeleniumDemo.Utilities
             Assert.IsTrue(element.Displayed, $"Element located by {locator} should be visible, but it is not.");
             return element;
         }
+
         public IWebElement WaitUntilClickable(By locator, int time = 20)
         {
             var wait = new WebDriverWait(drivers.Driver, TimeSpan.FromSeconds(time));

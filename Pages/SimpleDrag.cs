@@ -26,13 +26,22 @@ namespace SeleniumDemo.Pages
         public void simpledrag(string dragBox)
         {
             var source = waitHelpers.WaitForElement(simpledrag_box1(dragBox));
-            initialloc = source.Location.ToString();
-            var destination =waitHelpers.WaitForElement(dropbox);
+            var destination = waitHelpers.WaitForElement(dropbox);
             var driver = drivers.Driver;
+
+            var initial = source.Location;
             Actions actions = new Actions(driver);
-            actions.DragAndDrop(source, destination).Build().Perform();
-            afterloc = source.Location.ToString();
+            actions.ClickAndHold(source)
+                   .MoveByOffset(150, 50) // manual offset for DemoQA drag
+                   .Pause(TimeSpan.FromMilliseconds(300))
+                   .Release()
+                   .Perform();
+
+            Thread.Sleep(1000);
+            var after = source.Location;
+            Assert.AreNotEqual(initial, after, "Drag operation failed - element position did not change.");
         }
+
         public void validate_drag()
         {
             Assert.AreNotEqual(initialloc, afterloc, "Drag operation failed - element position did not change.");

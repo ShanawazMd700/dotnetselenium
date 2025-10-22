@@ -55,7 +55,10 @@ namespace SeleniumDemo.Pages
         }
         public void VerifySecondDrag()
         {
-            Assert.AreNotEqual(initialloc1, afterloc1, "Drag and Drop operation failed - element position changed.");
+            // Second (Not Acceptable) box should NOT move
+            Assert.AreEqual(initialloc1, afterloc1,
+                "Drag and Drop operation failed - 'Not Acceptable' element moved, but it should not.");
         }
+
     }
 }

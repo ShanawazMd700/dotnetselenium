@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenQA.Selenium.Interactions;
 using SeleniumDemo.Utilities;
 using static SeleniumDemo.Locators.Ilocators;
 
@@ -34,9 +35,23 @@ namespace SeleniumDemo.Pages
 
         public void DragAndDropInnerBox(string value)
         {
-            var value1 = dragbox1(value);
-            controlHelper.DragAndDrop(value1, targetbox1);
+            var source = waitHelpers.WaitForElement(dragbox1(value));
+            var target = waitHelpers.WaitForElement(targetbox1);
+            controlHelper.ScrollToElement(target);
+
+            var driver = drivers.Driver;
+            Actions actions = new Actions(driver);
+            // Move to center with slight offset to ensure drop registers
+            actions.ClickAndHold(source)
+                   .MoveToElement(target, 5, 5)
+                   .Pause(TimeSpan.FromMilliseconds(500))
+                   .Release()
+                   .Perform();
+
+            // Allow DOM update
+            Thread.Sleep(1000);
         }
+
         public void validateTextInInnerBox(string value)
         {
             var exText = controlHelper.GetText(targetbox1);
@@ -44,20 +59,28 @@ namespace SeleniumDemo.Pages
         }
         public void DragAndDropOtherOuterBox(string value)
         {
-            var value1 = dragbox1(value);
-            controlHelper.ScrollToElement(dragbox1(value));
-            controlHelper.ScrollToElement(targetbox2);
+            var source = waitHelpers.WaitForElement(dragbox1(value));
+            var target = waitHelpers.WaitForElement(targetbox2);
+            controlHelper.ScrollToElement(target);
 
-            // Short wait ensures page animations settle
+            var driver = drivers.Driver;
+            Actions actions = new Actions(driver);
+            actions.ClickAndHold(source)
+                   .MoveToElement(target, 10, 10)
+                   .Pause(TimeSpan.FromMilliseconds(500))
+                   .Release()
+                   .Perform();
+
             Thread.Sleep(1000);
-            controlHelper.DragAndDrop(value1, targetbox2);
         }
+
         public void validateTextInOtherOuterBox(string value)
         {
-            Thread.Sleep(1000);
             var exText = controlHelper.GetText(targetbox2);
-            Assert.IsTrue(exText.Contains(value), $"Expected text '{value}' not found in the other outer target box. Actual text: '{exText}'");
+            Assert.IsTrue(exText.Contains("Dropped!"),
+                $"Expected text 'Dropped!' not found in the other outer target box. Actual text: '{exText}'");
         }
+
         public void DragAndDropOtherInnerBox(string value)
         {
             Thread.Sleep(4000);

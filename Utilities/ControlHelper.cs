@@ -172,6 +172,13 @@ namespace SeleniumDemo.Utilities
             var element = waitHelpers.WaitForElement(Locator);
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
         }
+
+        public void ScrollToElement(IWebElement element)
+        {
+            var driver = drivers.Driver;
+            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
+        }
+
         public void Waitfor(int time)
         {
             Thread.Sleep(time * 1000);
