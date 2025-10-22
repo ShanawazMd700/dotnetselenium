@@ -44,10 +44,16 @@ namespace SeleniumDemo.Pages
         public void DragAndDropOtherOuterBox(string value)
         {
             var value1 = dragbox1(value);
+            controlHelper.ScrollToElement(dragbox1(value));
+            controlHelper.ScrollToElement(targetbox2);
+
+            // Short wait ensures page animations settle
+            Thread.Sleep(1000);
             controlHelper.DragAndDrop(value1, targetbox2);
         }
         public void validateTextInOtherOuterBox(string value)
         {
+            Thread.Sleep(1000);
             var exText = controlHelper.GetText(targetbox2);
             Assert.IsTrue(exText.Contains(value), $"Expected text '{value}' not found in the other outer target box. Actual text: '{exText}'");
         }
