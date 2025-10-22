@@ -181,9 +181,48 @@ namespace SeleniumDemo.Utilities
             var driver = drivers.Driver;
             var sourceElement = waitHelpers.WaitForElement(sourceLocator);
             var targetElement = waitHelpers.WaitForElement(targetLocator);
-            var actions = new OpenQA.Selenium.Interactions.Actions(driver);
-            actions.DragAndDrop(sourceElement, targetElement).Perform();
+
+            try
+            {
+                // Try normal drag first
+                new Actions(driver)
+                    .ClickAndHold(sourceElement)
+                    .MoveToElement(targetElement, 5, 5)
+                    .Release()
+                    .Perform();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("⚠️ Native drag failed, retrying via JS-based drag-and-drop...");
+
+                string jsDragAndDrop = @"
+            function triggerDragAndDrop(source, target) {
+                const dataTransfer = new DataTransfer();
+                const dragStartEvent = new DragEvent('dragstart', { bubbles: true, dataTransfer });
+                source.dispatchEvent(dragStartEvent);
+                
+                const dragEnterEvent = new DragEvent('dragenter', { bubbles: true, dataTransfer });
+                target.dispatchEvent(dragEnterEvent);
+                
+                const dragOverEvent = new DragEvent('dragover', { bubbles: true, dataTransfer });
+                target.dispatchEvent(dragOverEvent);
+                
+                const dropEvent = new DragEvent('drop', { bubbles: true, dataTransfer });
+                target.dispatchEvent(dropEvent);
+                
+                const dragEndEvent = new DragEvent('dragend', { bubbles: true, dataTransfer });
+                source.dispatchEvent(dragEndEvent);
+            }
+            triggerDragAndDrop(arguments[0], arguments[1]);
+        ";
+
+                ((IJavaScriptExecutor)driver).ExecuteScript(jsDragAndDrop, sourceElement, targetElement);
+            }
+
+            // Small wait for DOM to reflect the drop result
+            Thread.Sleep(1000);
         }
+
         public void ResizeElement(By handleLocator, int xOffset, int yOffset)
         {
             var driver = drivers.Driver;
