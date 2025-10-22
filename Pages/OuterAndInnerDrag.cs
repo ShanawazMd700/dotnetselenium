@@ -101,7 +101,7 @@ namespace SeleniumDemo.Pages
             else
             {
                 var exText = controlHelper.GetText(dropBox__3);
-                Assert.IsFalse(exText.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText}'");
+                Assert.IsTrue(exText.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText}'");
             }
         }
 
