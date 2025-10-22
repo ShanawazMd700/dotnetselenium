@@ -92,7 +92,7 @@ namespace SeleniumDemo.Pages
         public void validateTextInRevertableBox(string value)
         {
             var exText = controlHelper.GetText(dropBox__3);
-            Assert.IsTrue(exText.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText}'");
+            Assert.IsFalse(exText.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText}'");
         }
 
     }
