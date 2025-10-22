@@ -465,7 +465,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("We drag the element with text \"Not Revert\" into the box with the text Drop here", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 85
- await testRunner.ThenAsync("Verify if the text \"Dropped!\" is displayed in the box", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("Verify if the text \"Drop here\" is displayed in the box", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

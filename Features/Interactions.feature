@@ -82,7 +82,7 @@ Scenario: Performing a drag interaction into the box in Revert Draggable for ele
 	When We click on the element with the text "Droppable"
 	When We select the side option as "Revert Draggable"
 	When We drag the element with text "Not Revert" into the box with the text Drop here
-	Then Verify if the text "Dropped!" is displayed in the box
+	Then Verify if the text "Drop here" is displayed in the box
 
 Scenario: Performing a simple interaction of resizing
 	Given We go to the page "https://demoqa.com/"
