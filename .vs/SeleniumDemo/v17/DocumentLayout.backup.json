@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:pages\\outerandinnerdrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\features\\interactions.feature||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:features\\interactions.feature||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\stepdefinitions\\interactionsstepdefinitions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:stepdefinitions\\interactionsstepdefinitions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\features\\interactions.feature||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:features\\interactions.feature||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\hooks\\hooks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,7 +46,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Interactions.feature",
               "DocumentMoniker": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Features\\Interactions.feature",
               "RelativeDocumentMoniker": "Features\\Interactions.feature",
@@ -59,13 +59,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "InteractionsStepDefinitions.cs",
               "DocumentMoniker": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\StepDefinitions\\InteractionsStepDefinitions.cs",
               "RelativeDocumentMoniker": "StepDefinitions\\InteractionsStepDefinitions.cs",
               "ToolTip": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\StepDefinitions\\InteractionsStepDefinitions.cs",
               "RelativeToolTip": "StepDefinitions\\InteractionsStepDefinitions.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAAMwEIAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAowDwAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-22T05:39:48.571Z",
               "EditorCaption": ""
@@ -78,7 +78,7 @@
               "RelativeDocumentMoniker": "Pages\\OuterAndInnerDrag.cs",
               "ToolTip": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\OuterAndInnerDrag.cs",
               "RelativeToolTip": "Pages\\OuterAndInnerDrag.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAMwFIAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAvwFUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-22T06:12:36.2Z",
               "EditorCaption": ""
@@ -105,8 +105,7 @@
               "RelativeToolTip": "Hooks\\Hooks.cs",
               "ViewState": "AgIAADgAAAAAAAAAAAAcwMAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T09:45:29.28Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T09:45:29.28Z"
             },
             {
               "$type": "Document",

@@ -15,6 +15,7 @@ namespace SeleniumDemo.Pages
         public WaitHelpers waitHelpers;
         private string initialloc;
         private string afterloc;
+        private string value1;
         public OuterAndInnerDrag()
         {
             controlHelper = new ControlHelper();
@@ -72,6 +73,7 @@ namespace SeleniumDemo.Pages
 
         public void dragRevertable(string value)
         {
+            value1 = value;
             initialloc = waitHelpers.WaitForElement(dragbox1(value)).Location.ToString();
             controlHelper.DragAndDrop(dragbox1(value), dropBox_3);
             afterloc = waitHelpers.WaitForElement(dragbox1(value)).Location.ToString();
@@ -91,8 +93,16 @@ namespace SeleniumDemo.Pages
 
         public void validateTextInRevertableBox(string value)
         {
-            var exText = controlHelper.GetText(dropBox__3);
-            Assert.IsFalse(exText.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText}'");
+            if (value1 == "Will Revert")
+            {
+                var exText1 = controlHelper.GetText(dropBox__3);
+                Assert.IsTrue(exText1.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText1}'");
+            }
+            else
+            {
+                var exText = controlHelper.GetText(dropBox__3);
+                Assert.IsFalse(exText.Contains(value), $"Expected text '{value}' not found in the revertable box. Actual text: '{exText}'");
+            }
         }
 
     }
