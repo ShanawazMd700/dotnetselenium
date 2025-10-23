@@ -23,12 +23,43 @@ namespace SeleniumDemo.Pages
         }
 
         /** ✅ Robust file upload supporting both pages */
+        //public void UploadFile(string relativePath)
+        //{
+        //    if (driver == null)
+        //        throw new Exception("WebDriver is not initialized or has been disposed.");
+
+        //    // ✅ Try bin directory first
+        //    string binDirPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+        //    string projectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\"));
+        //    string projectFilePath = Path.Combine(projectDir, relativePath);
+
+        //    string filePath = File.Exists(binDirPath) ? binDirPath : projectFilePath;
+
+        //    if (!File.Exists(filePath))
+        //        throw new Exception($"File does not exist in either location: {binDirPath} or {projectFilePath}");
+
+        //    By uploadLocator;
+        //    string currentUrl = driver.Url.ToLower();
+
+        //    if (currentUrl.Contains("practice-form"))
+        //        uploadLocator = By.Id("uploadPicture");
+        //    else if (currentUrl.Contains("upload-download"))
+        //        uploadLocator = By.Id("uploadFile");
+        //    else
+        //        throw new Exception("Unknown page: cannot determine upload input.");
+
+        //    var uploadElement = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+        //                            .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(uploadLocator));
+
+        //    uploadElement.SendKeys(filePath);
+        //    Console.WriteLine($"✅ File uploaded: {filePath}");
+        //}
         public void UploadFile(string relativePath)
         {
             if (driver == null)
                 throw new Exception("WebDriver is not initialized or has been disposed.");
 
-            // ✅ Try bin directory first
+            // Try both possible paths (bin + project root)
             string binDirPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
             string projectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\"));
             string projectFilePath = Path.Combine(projectDir, relativePath);
@@ -39,21 +70,33 @@ namespace SeleniumDemo.Pages
                 throw new Exception($"File does not exist in either location: {binDirPath} or {projectFilePath}");
 
             By uploadLocator;
-            string currentUrl = driver.Url.ToLower();
+            string currentUrl;
 
+            try
+            {
+                currentUrl = driver.Url.ToLower();
+            }
+            catch (ObjectDisposedException)
+            {
+                throw new InvalidOperationException("WebDriver was disposed before file upload could complete.");
+            }
+
+            // Select locator based on current page
             if (currentUrl.Contains("practice-form"))
                 uploadLocator = By.Id("uploadPicture");
             else if (currentUrl.Contains("upload-download"))
                 uploadLocator = By.Id("uploadFile");
             else
-                throw new Exception("Unknown page: cannot determine upload input.");
+                throw new Exception($"Unknown page: cannot determine upload input for URL: {currentUrl}");
 
             var uploadElement = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                                     .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(uploadLocator));
 
             uploadElement.SendKeys(filePath);
+            Thread.Sleep(1000); // Wait for fakepath text to update
             Console.WriteLine($"✅ File uploaded: {filePath}");
         }
+
 
 
 
