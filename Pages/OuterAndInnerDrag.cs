@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using SeleniumDemo.Utilities;
 using static SeleniumDemo.Locators.Ilocators;
@@ -41,12 +42,40 @@ namespace SeleniumDemo.Pages
 
             var driver = drivers.Driver;
             Actions actions = new Actions(driver);
-            actions.ClickAndHold(source)
-                   .MoveToElement(target, 15, 15)
-                   .Pause(TimeSpan.FromMilliseconds(500))
-                   .Release()
-                   .Perform();
+            //actions.ClickAndHold(source)
+            //       .MoveToElement(target, 15, 15)
+            //       .Pause(TimeSpan.FromMilliseconds(500))
+            //       .Release()
+            //       .Perform();
 
+            //Thread.Sleep(1000);
+            // Perform robust drag and drop
+            try
+            {
+                actions
+                    .MoveToElement(source)
+                    .ClickAndHold()
+                    .Pause(TimeSpan.FromMilliseconds(300)) // small pre-move pause
+                    .MoveToElement(target, 15, 15)
+                    .Pause(TimeSpan.FromMilliseconds(500)) // ensure drop registers
+                    .Release()
+                    .Build()
+                    .Perform();
+            }
+            catch (WebDriverException ex)
+            {
+                // Retry once if transient drag/drop failure occurs (common in CI/headless)
+                Thread.Sleep(500);
+                actions
+                    .MoveToElement(source)
+                    .ClickAndHold()
+                    .MoveToElement(target, 15, 15)
+                    .Release()
+                    .Build()
+                    .Perform();
+            }
+
+            // Small wait to ensure drop is registered
             Thread.Sleep(1000);
         }
 
@@ -65,13 +94,14 @@ namespace SeleniumDemo.Pages
 
             var driver = drivers.Driver;
             Actions actions = new Actions(driver);
-            actions.ClickAndHold(source)
-                   .MoveToElement(target, 20, 20)
-                   .Pause(TimeSpan.FromMilliseconds(500))
-                   .Release()
-                   .Perform();
+            actions
+                .MoveToElement(source)
+                .ClickAndHold()
+                .MoveToElement(target, 5, 5)
+                .Pause(TimeSpan.FromMilliseconds(500))
+                .Release()
+                .Perform();
 
-            Thread.Sleep(1000);
         }
 
         public void validateTextInOtherOuterBox(string value)
