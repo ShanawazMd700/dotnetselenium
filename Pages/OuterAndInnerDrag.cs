@@ -107,7 +107,7 @@ namespace SeleniumDemo.Pages
         public void validateTextInOtherOuterBox(string value)
         {
             var exText = controlHelper.GetText(targetbox2);
-            Assert.IsTrue(exText.Contains("Dropped!"),
+            Assert.IsTrue(exText.Contains(value),
                 $"Expected text 'Dropped!' not found in the other outer target box. Actual text: '{exText}'");
         }
 
