@@ -41,22 +41,22 @@ namespace SeleniumDemo.Pages
 
             var driver = drivers.Driver;
             Actions actions = new Actions(driver);
-            // Move to center with slight offset to ensure drop registers
             actions.ClickAndHold(source)
-                   .MoveToElement(target, 5, 5)
+                   .MoveToElement(target, 15, 15)
                    .Pause(TimeSpan.FromMilliseconds(500))
                    .Release()
                    .Perform();
 
-            // Allow DOM update
             Thread.Sleep(1000);
         }
 
         public void validateTextInInnerBox(string value)
         {
             var exText = controlHelper.GetText(targetbox1);
-            Assert.IsTrue(exText.Contains(value), $"Expected text '{value}' not found in the inner target box. Actual text: '{exText}'");
+            Assert.IsTrue(exText.Contains("Dropped!"),
+                $"Expected text 'Dropped!' not found in the inner target box. Actual text: '{exText}'");
         }
+
         public void DragAndDropOtherOuterBox(string value)
         {
             var source = waitHelpers.WaitForElement(dragbox1(value));
@@ -66,7 +66,7 @@ namespace SeleniumDemo.Pages
             var driver = drivers.Driver;
             Actions actions = new Actions(driver);
             actions.ClickAndHold(source)
-                   .MoveToElement(target, 10, 10)
+                   .MoveToElement(target, 20, 20)
                    .Pause(TimeSpan.FromMilliseconds(500))
                    .Release()
                    .Perform();
@@ -80,6 +80,7 @@ namespace SeleniumDemo.Pages
             Assert.IsTrue(exText.Contains("Dropped!"),
                 $"Expected text 'Dropped!' not found in the other outer target box. Actual text: '{exText}'");
         }
+
 
         public void DragAndDropOtherInnerBox(string value)
         {

@@ -30,17 +30,20 @@ namespace SeleniumDemo.Pages
             var driver = drivers.Driver;
 
             var initial = source.Location;
+
             Actions actions = new Actions(driver);
             actions.ClickAndHold(source)
-                   .MoveByOffset(150, 50) // manual offset for DemoQA drag
+                   .MoveByOffset(150, 100) // offset sufficient for DemoQA layout
                    .Pause(TimeSpan.FromMilliseconds(300))
                    .Release()
                    .Perform();
 
             Thread.Sleep(1000);
+
             var after = source.Location;
             Assert.AreNotEqual(initial, after, "Drag operation failed - element position did not change.");
         }
+
 
         public void validate_drag()
         {
