@@ -41,49 +41,36 @@ namespace SeleniumDemo.Pages
             controlHelper.ScrollToElement(target);
 
             var driver = drivers.Driver;
-            Actions actions = new Actions(driver);
-            //actions.ClickAndHold(source)
-            //       .MoveToElement(target, 15, 15)
-            //       .Pause(TimeSpan.FromMilliseconds(500))
-            //       .Release()
-            //       .Perform();
 
-            //Thread.Sleep(1000);
-            // Perform robust drag and drop
-            try
-            {
-                actions
-                    .MoveToElement(source)
-                    .ClickAndHold()
-                    .Pause(TimeSpan.FromMilliseconds(300)) // small pre-move pause
-                    .MoveToElement(target, 15, 15)
-                    .Pause(TimeSpan.FromMilliseconds(500)) // ensure drop registers
-                    .Release()
-                    .Build()
-                    .Perform();
-            }
-            catch (WebDriverException ex)
-            {
-                // Retry once if transient drag/drop failure occurs (common in CI/headless)
-                Thread.Sleep(500);
-                actions
-                    .MoveToElement(source)
-                    .ClickAndHold()
-                    .MoveToElement(target, 15, 15)
-                    .Release()
-                    .Build()
-                    .Perform();
-            }
+            string script = @"
+    function simulateDragDrop(sourceNode, destinationNode) {
+        const dataTransfer = new DataTransfer();
+        const fireEvent = (type, node) => {
+            const event = new DragEvent(type, {
+                bubbles: true,
+                cancelable: true,
+                dataTransfer: dataTransfer
+            });
+            node.dispatchEvent(event);
+        };
+        fireEvent('dragstart', sourceNode);
+        fireEvent('dragenter', destinationNode);
+        fireEvent('dragover', destinationNode);
+        fireEvent('drop', destinationNode);
+        fireEvent('dragend', sourceNode);
+    }
+    simulateDragDrop(arguments[0], arguments[1]);
+    ";
 
-            // Small wait to ensure drop is registered
-            Thread.Sleep(1000);
+            ((IJavaScriptExecutor)driver).ExecuteScript(script, source, target);
+            Thread.Sleep(1000); // wait for text update
         }
 
-        public void validateTextInInnerBox(string value)
+        public void validateTextInInnerBox(string expected)
         {
-            var exText = controlHelper.GetText(targetbox1);
-            Assert.IsTrue(exText.Contains("Dropped!"),
-                $"Expected text 'Dropped!' not found in the inner target box. Actual text: '{exText}'");
+            var innerTarget = waitHelpers.WaitForElement(targetbox1);
+            string actualText = innerTarget.Text.Trim();
+            Assert.IsTrue(actualText.Contains(expected), $"Expected text '{expected}' not found in the inner target box. Actual text: '{actualText}'");
         }
 
         public void DragAndDropOtherOuterBox(string value)

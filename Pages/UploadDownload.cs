@@ -56,6 +56,68 @@ namespace SeleniumDemo.Pages
         //}
         public void UploadFile(string relativePath)
         {
+            //    // Ensure driver is alive
+            //    if (driver == null)
+            //        throw new InvalidOperationException("WebDriver is not initialized or has been disposed.");
+
+            //    // Resolve file path robustly
+            //    string binDirPath = Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            //    string projectDir = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\"));
+            //    string projectFilePath = Path.Combine(projectDir, relativePath);
+            //    string filePath = File.Exists(binDirPath) ? binDirPath : projectFilePath;
+
+            //    if (!File.Exists(filePath))
+            //        throw new FileNotFoundException($"File does not exist in either location: {binDirPath} or {projectFilePath}");
+
+            //    By uploadLocator;
+            //    string currentUrl;
+
+            //    // Safely get current URL
+            //    try
+            //    {
+            //        currentUrl = driver.Url.ToLower();
+            //    }
+            //    catch (ObjectDisposedException)
+            //    {
+            //        throw new InvalidOperationException("WebDriver was disposed before file upload could complete.");
+            //    }
+
+            //    // Determine locator based on page
+            //    if (currentUrl.Contains("practice-form"))
+            //        uploadLocator = By.Id("uploadPicture");
+            //    else if (currentUrl.Contains("upload-download"))
+            //        uploadLocator = By.Id("uploadFile");
+            //    else
+            //        throw new InvalidOperationException($"Unknown page: cannot determine upload input for URL: {currentUrl}");
+
+            //    try
+            //    {
+            //        // Wait until upload element is clickable (more robust than just visible)
+            //        var uploadElement = new WebDriverWait(driver, TimeSpan.FromSeconds(20))
+            //                                .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(uploadLocator));
+
+            //        // Scroll into view for CI headless reliability
+            //        ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", uploadElement);
+
+            //        // Send file path
+            //        uploadElement.SendKeys(filePath);
+
+            //        // Wait until fakepath text appears in input (ensures file uploaded)
+            //        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            //        wait.Until(d =>
+            //        {
+            //            var val = uploadElement.GetAttribute("value");
+            //            return !string.IsNullOrEmpty(val) && val.Contains(Path.GetFileName(filePath));
+            //        });
+
+            //        Console.WriteLine($"✅ File uploaded successfully: {filePath}");
+            //    }
+            //    catch (WebDriverException ex)
+            //    {
+            //        throw new InvalidOperationException($"Failed to upload file: {filePath}. Exception: {ex.Message}", ex);
+            //    }
+            var driver = drivers.Driver;
+
             // Ensure driver is alive
             if (driver == null)
                 throw new InvalidOperationException("WebDriver is not initialized or has been disposed.");
@@ -69,10 +131,8 @@ namespace SeleniumDemo.Pages
             if (!File.Exists(filePath))
                 throw new FileNotFoundException($"File does not exist in either location: {binDirPath} or {projectFilePath}");
 
-            By uploadLocator;
+            // Determine upload input based on current URL
             string currentUrl;
-
-            // Safely get current URL
             try
             {
                 currentUrl = driver.Url.ToLower();
@@ -82,7 +142,7 @@ namespace SeleniumDemo.Pages
                 throw new InvalidOperationException("WebDriver was disposed before file upload could complete.");
             }
 
-            // Determine locator based on page
+            By uploadLocator;
             if (currentUrl.Contains("practice-form"))
                 uploadLocator = By.Id("uploadPicture");
             else if (currentUrl.Contains("upload-download"))
@@ -92,18 +152,18 @@ namespace SeleniumDemo.Pages
 
             try
             {
-                // Wait until upload element is clickable (more robust than just visible)
-                var uploadElement = new WebDriverWait(driver, TimeSpan.FromSeconds(20))
-                                        .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(uploadLocator));
+                // Wait until upload element is clickable
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+                var uploadElement = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(uploadLocator));
 
-                // Scroll into view for CI headless reliability
+                // Scroll into view
                 ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", uploadElement);
+                Thread.Sleep(200); // allow scroll to settle
 
                 // Send file path
                 uploadElement.SendKeys(filePath);
 
-                // Wait until fakepath text appears in input (ensures file uploaded)
-                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                // Wait until the input value reflects uploaded file
                 wait.Until(d =>
                 {
                     var val = uploadElement.GetAttribute("value");
