@@ -31,40 +31,40 @@ namespace SeleniumDemo.Pages
             var target = waitHelpers.WaitForElement(By.XPath($"//*[text()='{targetText}']"));
 
             // Scroll both elements into view
-            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true); arguments[1].scrollIntoView(true);", source, target);
+            ((IJavaScriptExecutor)driver).ExecuteScript(
+                "arguments[0].scrollIntoView(true); arguments[1].scrollIntoView(true);", source, target);
             Thread.Sleep(500);
 
             string script = @"
-        function simulateDragDrop(sourceNode, destinationNode) {
-            const dataTransfer = new DataTransfer();
-            const fireEvent = (type, node) => {
-                const event = new DragEvent(type, {
-                    bubbles: true,
-                    cancelable: true,
-                    dataTransfer: dataTransfer
-                });
-                node.dispatchEvent(event);
-            };
-            fireEvent('dragstart', sourceNode);
-            fireEvent('dragenter', destinationNode);
-            fireEvent('dragover', destinationNode);
-            fireEvent('drop', destinationNode);
-            fireEvent('dragend', sourceNode);
-        }
-        simulateDragDrop(arguments[0], arguments[1]);
-    ";
+            function simulateDragDrop(sourceNode, destinationNode) {
+                const dataTransfer = new DataTransfer();
+                const fireEvent = (type, node) => {
+                    const event = new DragEvent(type, {
+                        bubbles: true,
+                        cancelable: true,
+                        dataTransfer: dataTransfer
+                    });
+                    node.dispatchEvent(event);
+                };
+                fireEvent('dragstart', sourceNode);
+                fireEvent('dragenter', destinationNode);
+                fireEvent('dragover', destinationNode);
+                fireEvent('drop', destinationNode);
+                fireEvent('dragend', sourceNode);
+            }
+            simulateDragDrop(arguments[0], arguments[1]);
+        ";
 
             ((IJavaScriptExecutor)driver).ExecuteScript(script, source, target);
-
             Thread.Sleep(1000);
 
-            var dropText = target.Text.Trim();
-            Assert.IsTrue(dropText.Contains("Dropped"), $"❌ Drag and Drop failed - text is '{dropText}'");
+            // Store for separate assertion
+            afterloc = target.Text.Trim();
         }
 
         public void validate_dragdrop()
         {
-            Assert.AreNotEqual(initialloc, afterloc, "Drag and Drop operation failed - element position did not change.");
+            Assert.IsTrue(afterloc.Contains("Dropped"), $"❌ Drag and Drop failed - text is '{afterloc}'");
         }
     }
 }

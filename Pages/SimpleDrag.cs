@@ -29,17 +29,18 @@ namespace SeleniumDemo.Pages
             var driver = drivers.Driver;
             var source = waitHelpers.WaitForElement(simpledrag_box1(dragBox));
 
-            // Scroll element into view just in case
+            // Scroll element into view
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", source);
             Thread.Sleep(500);
 
-            var initial = source.Location;
+            // Store initial location
+            initialloc = $"{source.Location.X},{source.Location.Y}";
 
-            Actions actions = new Actions(driver);
             try
             {
+                Actions actions = new Actions(driver);
                 actions.ClickAndHold(source)
-                       .MoveByOffset(80, 40)  // ✅ smaller offset within visible bounds
+                       .MoveByOffset(50, 30) // safe offset
                        .Pause(TimeSpan.FromMilliseconds(300))
                        .Release()
                        .Perform();
@@ -47,23 +48,27 @@ namespace SeleniumDemo.Pages
             catch (MoveTargetOutOfBoundsException)
             {
                 Console.WriteLine("⚠️ Drag offset too large, retrying with smaller movement...");
+                Actions actions = new Actions(driver);
                 actions.ClickAndHold(source)
-                       .MoveByOffset(30, 30)
+                       .MoveByOffset(20, 20)
                        .Release()
                        .Perform();
             }
 
             Thread.Sleep(1000);
 
-            var after = source.Location;
-            Assert.AreNotEqual(initial, after, "Drag operation failed - element position did not change.");
+            // Re-fetch element after drag
+            var moved = waitHelpers.WaitForElement(simpledrag_box1(dragBox));
+            afterloc = $"{moved.Location.X},{moved.Location.Y}";
         }
 
 
 
         public void validate_drag()
         {
-            Assert.AreNotEqual(initialloc, afterloc, "Drag operation failed - element position did not change.");
+            Assert.IsNotNull(afterloc, "❌ Drag operation failed - element location is null");
+            Assert.AreNotEqual(initialloc, afterloc, $"❌ Drag operation failed - element did not move. Before: {initialloc}, After: {afterloc}");
+
         }
 
     }

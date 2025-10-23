@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\pages\\simpledrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:pages\\simpledrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\pages\\dragdrop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:pages\\dragdrop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\features\\interactions.feature||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:features\\interactions.feature||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\pages\\simpledrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|solutionrelative:pages\\simpledrag.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7C4B89BD-9C0C-459D-9E5A-323467B74968}|SeleniumDemo.csproj|c:\\users\\iray\\source\\repos\\seleniumdemo\\stepdefinitions\\simpledraggingstepdefinitions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -78,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 15,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,20 +90,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "DragDrop.cs",
               "DocumentMoniker": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\DragDrop.cs",
               "RelativeDocumentMoniker": "Pages\\DragDrop.cs",
-              "ToolTip": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\DragDrop.cs",
-              "RelativeToolTip": "Pages\\DragDrop.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowD0AAABqAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\DragDrop.cs*",
+              "RelativeToolTip": "Pages\\DragDrop.cs*",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAAEIAAABqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-23T11:24:18.841Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "DragAndDropStepDefinitions.cs",
               "DocumentMoniker": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\StepDefinitions\\DragAndDropStepDefinitions.cs",
               "RelativeDocumentMoniker": "StepDefinitions\\DragAndDropStepDefinitions.cs",
@@ -223,7 +223,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Interactions.feature",
               "DocumentMoniker": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Features\\Interactions.feature",
               "RelativeDocumentMoniker": "Features\\Interactions.feature",
@@ -247,15 +247,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "SimpleDrag.cs",
               "DocumentMoniker": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\SimpleDrag.cs",
               "RelativeDocumentMoniker": "Pages\\SimpleDrag.cs",
               "ToolTip": "C:\\Users\\iray\\source\\repos\\SeleniumDemo\\Pages\\SimpleDrag.cs",
               "RelativeToolTip": "Pages\\SimpleDrag.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAswDgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAowEYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-22T11:25:40.997Z"
+              "WhenOpened": "2025-10-22T11:25:40.997Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
