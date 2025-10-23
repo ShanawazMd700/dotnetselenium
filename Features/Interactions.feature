@@ -56,7 +56,7 @@ Scenario: Performing a drag interaction into other box in Prevent Propogation
 	When We click on the element with the text "Droppable"
 	When We select the side option as "Prevent Propogation"
 	When We drag the element with the text "Drag Me" into other outer box
-	Then Verify if the dropping is done for the other outer box and the text "Dropped!" is displayed
+	Then Verify if the dropping is done for the other outer box and the text "Outer droppable" is displayed
 
 #Scenario: Performing a drag interaction into other inner box in Prevent Propogation 
 #	Given We go to the page "https://demoqa.com/"

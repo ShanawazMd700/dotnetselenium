@@ -375,8 +375,8 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("We drag the element with the text \"Drag Me\" into other outer box", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 59
- await testRunner.ThenAsync("Verify if the dropping is done for the other outer box and the text \"Dropped!\" is" +
-                        " displayed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("Verify if the dropping is done for the other outer box and the text \"Outer droppa" +
+                        "ble\" is displayed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
