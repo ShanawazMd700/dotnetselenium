@@ -30,19 +30,35 @@ namespace SeleniumDemo.Pages
             var source = waitHelpers.WaitForElement(By.XPath($"//*[text()='{sourceText}']"));
             var target = waitHelpers.WaitForElement(By.XPath($"//*[text()='{targetText}']"));
 
-            ((IJavaScriptExecutor)driver).ExecuteScript(@"
+            // Scroll both elements into view
+            ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true); arguments[1].scrollIntoView(true);", source, target);
+            Thread.Sleep(500);
+
+            string script = @"
         function simulateDragDrop(sourceNode, destinationNode) {
             const dataTransfer = new DataTransfer();
-            sourceNode.dispatchEvent(new DragEvent('dragstart', { dataTransfer }));
-            destinationNode.dispatchEvent(new DragEvent('drop', { dataTransfer }));
-            sourceNode.dispatchEvent(new DragEvent('dragend', { dataTransfer }));
+            const fireEvent = (type, node) => {
+                const event = new DragEvent(type, {
+                    bubbles: true,
+                    cancelable: true,
+                    dataTransfer: dataTransfer
+                });
+                node.dispatchEvent(event);
+            };
+            fireEvent('dragstart', sourceNode);
+            fireEvent('dragenter', destinationNode);
+            fireEvent('dragover', destinationNode);
+            fireEvent('drop', destinationNode);
+            fireEvent('dragend', sourceNode);
         }
         simulateDragDrop(arguments[0], arguments[1]);
-    ", source, target);
+    ";
+
+            ((IJavaScriptExecutor)driver).ExecuteScript(script, source, target);
 
             Thread.Sleep(1000);
 
-            var dropText = target.Text;
+            var dropText = target.Text.Trim();
             Assert.IsTrue(dropText.Contains("Dropped"), $"❌ Drag and Drop failed - text is '{dropText}'");
         }
 
