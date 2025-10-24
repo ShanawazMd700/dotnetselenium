@@ -22,7 +22,6 @@ namespace SeleniumDemo.Pages
         public void selectRadioButton(string value)
         {
             Thread.Sleep(3000); // Adding a delay to ensure the page is fully loaded before clicking
-            //controlHelper.ButtonClick(radiobutton(value));
             controlHelper.Click(radiobutton(value));    
         }
 

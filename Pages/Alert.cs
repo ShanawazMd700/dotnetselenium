@@ -14,7 +14,7 @@ namespace SeleniumDemo.Pages
     {
         public ControlHelper controlHelper;
         public WaitHelpers waitHelpers;
-        //private IWebDriver driver;
+        
         public Alert()
         {
             controlHelper = new ControlHelper();
