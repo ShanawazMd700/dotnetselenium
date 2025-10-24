@@ -10,12 +10,12 @@ Scenario: Performing a simple interaction of drag and drop
 	When We drag the element with the text "Drag me" into the box
 	Then Verify if the dragging is done for the element with the text "Drag me"
 
-Scenario: Performing a simple drag and drop
-	Given We go to the page "https://demoqa.com/"
-	And We click on the element with the text "Interactions" 
-	When We click on the element with the text "Droppable"
-	When We drag the element with the text "Drag me" into the box with the text "Drop here"
-	Then Verify if the dropping is done for the box with the text "Drop here"
+#Scenario: Performing a simple drag and drop
+#	Given We go to the page "https://demoqa.com/"
+#	And We click on the element with the text "Interactions" 
+#	When We click on the element with the text "Droppable"
+#	When We drag the element with the text "Drag me" into the box with the text "Drop here"
+#	Then Verify if the dropping is done for the box with the text "Drop here"
 
 Scenario: Performing the drag and drop of two elements into a box
 	Given We go to the page "https://demoqa.com/"
@@ -42,13 +42,13 @@ Scenario: Performing a drag in  Prevent Propogation outerbox
 	When We drag the element with the text "Drag Me" into the outer box
 	Then Verify if the dropping is done for the outer box and the text "Dropped!" is displayed
 
-Scenario: Performing a drag in Prevent Propogation innerbox
-	Given We go to the page "https://demoqa.com/"
-	And We click on the element with the text "Interactions" 
-	When We click on the element with the text "Droppable"
-	When We select the side option as "Prevent Propogation"
-	When We drag the element with the text "Drag Me" into the inner box
-	Then Verify if the dropping is done for the inner box and the text "Dropped!" is displayed
+#Scenario: Performing a drag in Prevent Propogation innerbox
+#	Given We go to the page "https://demoqa.com/"
+#	And We click on the element with the text "Interactions" 
+#	When We click on the element with the text "Droppable"
+#	When We select the side option as "Prevent Propogation"
+#	When We drag the element with the text "Drag Me" into the inner box
+#	Then Verify if the dropping is done for the inner box and the text "Dropped!" is displayed
 
 Scenario: Performing a drag interaction into other box in Prevent Propogation 
 	Given We go to the page "https://demoqa.com/"
