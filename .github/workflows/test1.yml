@@ -70,6 +70,7 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+          git pull --rebase
           git add TestResults
           git diff-index --quiet HEAD || git commit -m "Update Extent Report from CI run [skip ci]"
           git push
