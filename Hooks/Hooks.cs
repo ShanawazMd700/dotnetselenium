@@ -22,11 +22,18 @@ namespace SeleniumDemo.Hooks
         public static ExtentTest _scenario;
 
         // Base directory for test results
-        public static string Dir = AppDomain.CurrentDomain.BaseDirectory;
-        public static string TestResultPath = Path.Combine(
-            Dir.Replace("bin\\Debug\\net9.0", "TestResults"),
-            DateTime.Now.ToString("yyyyMMdd_HHmmss")
-        );
+        // ✅ Root path detection for CI & local execution
+        private static readonly string ProjectRoot =
+            Directory.GetParent(AppContext.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
+
+        // ✅ Timestamp-based results folder
+        private static readonly string Timestamp =
+            DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+        // ✅ Final TestResults folder path in project root
+        public static readonly string TestResultPath =
+            Path.Combine(ProjectRoot, "TestResults", Timestamp);
+
 
         // ✅ Reusable driver
         public static IWebDriver driver;
