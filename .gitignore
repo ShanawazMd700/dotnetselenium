@@ -1,7 +1,12 @@
-﻿bin/
+# Ignore Allure reports
+Allure-HTML-Reports/
+Allure-Reports/
+
+# Ignore bin folder
+bin/
+
+# Ignore specific files
+runTests.bat
+run_counter.txt
+
 obj/
-*.log
-*.cache
-*.json
-*.dgspec.json
-TestResults.log
