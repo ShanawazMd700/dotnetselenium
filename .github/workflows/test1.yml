@@ -23,6 +23,9 @@ jobs:
       # Step 1: Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+         fetch-depth: 0
+         token: ${{ secrets.GITHUB_TOKEN }}
 
       #  Step 2: Setup .NET SDK
       - name: Setup .NET
